@@ -1,0 +1,4 @@
+train:
+  SEED: 11
+predict:
+  SEED: 11
