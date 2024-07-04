@@ -1,2 +1,3 @@
-venv_air
-mlflow
+env_data/
+mlflow/
+notebooks/
