@@ -1,3 +1,4 @@
 mlflow==2.14.2
 python-dotenv==1.0.1
 python-youtube==0.9.4
+pymystem3==0.2.0
