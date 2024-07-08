@@ -1,4 +1,48 @@
-train:
-  SEED: 11
 predict:
   SEED: 11
+  comments_linux:
+    count_video: 2
+    limit: 10
+    maxResults: 100
+    nextPageToken: ''
+    query: линукс
+  comments_windows:
+    count_video: 2
+    limit: 10
+    maxResults: 100
+    nextPageToken: ''
+    query: виндовс
+  model_vec: vector_tfidf
+  name_file: data/prediction.csv
+  num_top: 5
+  stopwords: russian
+  version_model_dt: 0
+  version_model_lr: 1
+  version_model_rf: 1
+  version_vec: 1
+train:
+  SEED: 11
+  clf: 2
+  comments_linux:
+    count_video: 5
+    limit: 30
+    maxResults: 100
+    nextPageToken: ''
+    query: линукс
+  comments_windows:
+    count_video: 5
+    limit: 30
+    maxResults: 100
+    nextPageToken: ''
+    query: виндовс
+  cross_val:
+    test_size: 0.3
+  model_name:
+  - model_lr
+  - model_dt
+  - model_rf
+  model_vec: vector_tfidf
+  name_experiment: linux_or_windows
+  stopwords: russian
+  tf_model:
+    max_features: 300

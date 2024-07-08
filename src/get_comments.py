@@ -20,7 +20,7 @@ def get_data(videoId, maxResults, nextPageToken):
                    'part=snippet&videoId={videoId}&maxResults={maxResults}&pageToken={nextPageToken}')
     format_youtube_uri = YOUTUBE_URI.format(KEY=YOUTUBE_API_KEY,
                                             videoId=videoId,
-                                            muxResults=maxResults,
+                                            maxResults=maxResults,
                                             nextPageToken=nextPageToken)
     content = requests.get(format_youtube_uri).text
     data = json.loads(content)
@@ -44,12 +44,10 @@ def get_all_comments(query, count_video, limit, maxResults, nextPageToken):
     """
     api = Api(api_key=YOUTUBE_API_KEY)
     video_by_keywords = api.search_by_keywords(q=query,
-                                               search_type=["video"],
+                                               search_type=['video'],
                                                count=count_video,
                                                limit=limit)
-    print(f'video_by_keywords: {video_by_keywords}')
     video_id = [x.id.videoId for x in video_by_keywords.items]
-    print(f'video_id: {video_id}')
 
     comments_all = []
     for id in video_id:
@@ -63,4 +61,3 @@ def get_all_comments(query, count_video, limit, maxResults, nextPageToken):
             continue
     comments = sum(comments_all, [])
     return comments
-
