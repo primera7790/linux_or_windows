@@ -2,7 +2,6 @@ import logging
 import os
 from pathlib import Path
 
-import numpy as np
 import pandas as pd
 import yaml
 from nltk.corpus import stopwords
