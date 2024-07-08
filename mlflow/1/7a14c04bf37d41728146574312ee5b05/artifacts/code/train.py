@@ -37,19 +37,20 @@ def get_version_model(config_name, client):
     dict_push = {}
     for count, value in enumerate(client.search_model_versions(f'name="{config_name}"')):
         dict_push[count] = value
-    return dict(list(dict_push.items())[0][1])['version']
+    return dict(list(dict_push.items())[-1][1])['version']
+
 
 def main():
     """
-    Получение тематик из текста и сохранение моделиmodel_name
+    Получение тематик из текста и сохранение модели
     """
     comments_linux = get_comments.get_all_comments(**config['comments_linux'])
     comments_windows = get_comments.get_all_comments(**config['comments_windows'])
-
+    print(1)
     comments_clean_linux = preprocess.get_clean_text(comments_linux, stopwords.words(config['stopwords']))
     comments_clean_windows = preprocess.get_clean_text(comments_windows, stopwords.words(config['stopwords']))
     comments_clean = comments_clean_linux + comments_clean_windows
-
+    print(2)
     vectorizer = TfidfVectorizer(**config['tf_model'])
     tfidf = vectorizer.fit(comments_clean)
     X_matrix_linux = preprocess.vectorize_text(comments_clean_linux, tfidf)
@@ -60,7 +61,7 @@ def main():
     y_linux = [0] * X_matrix_linux.shape[0]
     y_windows = [1] * X_matrix_windows.shape[0]
     y = y_linux + y_windows
-
+    print(3)
     X_train, X_test, y_train, y_test = train_test_split(X,
                                                         y,
                                                         **config['cross_val'],
@@ -75,11 +76,12 @@ def main():
 
     # scores = cross_val_score(clf, X, y, cv=5, n_jobs=-1)
     # print(scores.mean())
-
+    print(4)
     mlflow.set_tracking_uri('http://localhost:5000')
     mlflow.set_experiment(config['name_experiment'])
 
-    with mlflow.start_run(run_name=f'{config_predict["version_vec"]}_{config["model_name"][config["clf"]]}_run'):
+    # version_clf_name = f'version_{config["model_name"][config["clf"]]}'
+    with mlflow.start_run():
         clf.fit(X_train, y_train)
 
         mlflow.log_param('accuracy', accuracy_score(y_test, clf.predict(X_test)))
@@ -96,6 +98,9 @@ def main():
     client = MlflowClient()
     last_version_clf = get_version_model(config['model_name'][config['clf']], client)
     last_version_vec = get_version_model(config['model_vec'], client)
+
+    print(f'last_version_clf: {last_version_clf}')
+    print(f'last_version_vec: {last_version_vec}')
 
     yaml_file = yaml.safe_load(open(config_path))
     yaml_file['predict'][f'version_{config["model_name"][config["clf"]]}'] = int(last_version_clf)

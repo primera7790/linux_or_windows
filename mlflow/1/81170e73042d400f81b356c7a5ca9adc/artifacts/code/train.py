@@ -37,11 +37,12 @@ def get_version_model(config_name, client):
     dict_push = {}
     for count, value in enumerate(client.search_model_versions(f'name="{config_name}"')):
         dict_push[count] = value
-    return dict(list(dict_push.items())[0][1])['version']
+    return dict(list(dict_push.items())[-1][1])['version']
+
 
 def main():
     """
-    Получение тематик из текста и сохранение моделиmodel_name
+    Получение тематик из текста и сохранение модели
     """
     comments_linux = get_comments.get_all_comments(**config['comments_linux'])
     comments_windows = get_comments.get_all_comments(**config['comments_windows'])
@@ -79,7 +80,8 @@ def main():
     mlflow.set_tracking_uri('http://localhost:5000')
     mlflow.set_experiment(config['name_experiment'])
 
-    with mlflow.start_run(run_name=f'{config_predict["version_vec"]}_{config["model_name"][config["clf"]]}_run'):
+    version_clf_name = f'version_{config["model_name"][config["clf"]]}'
+    with mlflow.start_run(run_name=f'{config_predict[version_clf_name]}_{config["model_name"][config["clf"]]}_run'):
         clf.fit(X_train, y_train)
 
         mlflow.log_param('accuracy', accuracy_score(y_test, clf.predict(X_test)))

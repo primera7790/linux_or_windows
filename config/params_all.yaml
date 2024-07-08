@@ -17,20 +17,20 @@ predict:
   num_top: 5
   stopwords: russian
   version_model_dt: 0
-  version_model_lr: 1
-  version_model_rf: 1
-  version_vec: 1
+  version_model_lr: 2
+  version_model_rf: 7
+  version_vec: 9
 train:
   SEED: 11
   clf: 2
   comments_linux:
-    count_video: 5
+    count_video: 10
     limit: 30
     maxResults: 100
     nextPageToken: ''
     query: линукс
   comments_windows:
-    count_video: 5
+    count_video: 10
     limit: 30
     maxResults: 100
     nextPageToken: ''

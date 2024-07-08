@@ -37,7 +37,10 @@ def get_version_model(config_name, client):
     dict_push = {}
     for count, value in enumerate(client.search_model_versions(f'name="{config_name}"')):
         dict_push[count] = value
+        print(dict_push)
     return dict(list(dict_push.items())[0][1])['version']
+mlflow.set_tracking_uri('http://localhost:5000')
+mlflow.set_experiment(config['name_experiment'])
 
 def main():
     """
@@ -79,7 +82,8 @@ def main():
     mlflow.set_tracking_uri('http://localhost:5000')
     mlflow.set_experiment(config['name_experiment'])
 
-    with mlflow.start_run(run_name=f'{config_predict["version_vec"]}_{config["model_name"][config["clf"]]}_run'):
+    # version_clf_name = f'version_{config["model_name"][config["clf"]]}'
+    with mlflow.start_run():
         clf.fit(X_train, y_train)
 
         mlflow.log_param('accuracy', accuracy_score(y_test, clf.predict(X_test)))
