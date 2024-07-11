@@ -19,8 +19,8 @@ predict:
   stopwords: russian
   version_model_dt: 0
   version_model_lr: 2
-  version_model_rf: 13
-  version_vec: 15
+  version_model_rf: 14
+  version_vec: 16
 train:
   SEED: 11
   clf: 2
