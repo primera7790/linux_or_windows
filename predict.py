@@ -13,6 +13,7 @@ import src.preprocessing_text as preprocess
 config_path = os.path.join(Path(__file__).parent, 'config/params_all.yaml')
 config = yaml.safe_load(open(config_path))['predict']
 config_train = yaml.safe_load(open(config_path))['train']
+os.chdir(config['dir_folder'])
 SEED = config['SEED']
 
 logging.basicConfig(filename='log/app.log', filemode='w+', format='%(asctime)s : %(levelname)s : %(message)s',

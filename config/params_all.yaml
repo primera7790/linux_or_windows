@@ -12,14 +12,15 @@ predict:
     maxResults: 100
     nextPageToken: ''
     query: виндовс
+  dir_folder: /home/primera7790/ml_projects/linux_or_windows
   model_vec: vector_tfidf
   name_file: data/prediction.csv
   num_top: 5
   stopwords: russian
   version_model_dt: 0
   version_model_lr: 2
-  version_model_rf: 7
-  version_vec: 9
+  version_model_rf: 13
+  version_vec: 15
 train:
   SEED: 11
   clf: 2
@@ -37,6 +38,7 @@ train:
     query: виндовс
   cross_val:
     test_size: 0.3
+  dir_folder: /home/primera7790/ml_projects/linux_or_windows
   model_name:
   - model_lr
   - model_dt
